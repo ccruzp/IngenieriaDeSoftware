@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+
+# descomponerPrimos.py
+# Recibe un numero y lo descompone en factores primos
+# Autores: Carlos Cruz 10-10168
+#          Luis Miranda 10-10463
+
+
+numero = raw_input("Introduzca el numero que desea descomponer en factores primos: ")
