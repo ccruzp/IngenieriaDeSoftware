@@ -83,6 +83,5 @@ class PruebaArticulo(unittest.TestCase):
 
         assert str(self.Articulo) == self.Articulo.tema+' '+self.Articulo.titulo+': '+str(self.Articulo.calificacion)
 
-
 if __name__=="__main__":
     unittest.main()

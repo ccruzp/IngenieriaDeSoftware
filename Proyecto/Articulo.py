@@ -7,15 +7,14 @@
 # Clase que representa los articulos del CLEI
 
 class Articulo(object):
-    titulo = None
-    tema = None
-    aceptado = False
-    calificacion = []
-        
+           
     # Constructor
     def __init__(self, titulo, tema):
         self.titulo = titulo
         self.tema = tema
+        self.aceptado = False
+        self.calificacion = []
+
     # Calcula el promedio de las calificaciones del articulo    
     def promedioEvaluaciones(self):
         if len(self.calificacion) == 0:
@@ -27,6 +26,7 @@ class Articulo(object):
                 
             promedio = promedio / float(len(self.calificacion))
             return promedio
+
     # Agrega una nota a la calificacion del articulo
     def calificar(self, nota):
         self.calificacion.append(nota)
