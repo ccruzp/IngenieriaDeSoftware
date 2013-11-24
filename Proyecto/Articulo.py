@@ -14,18 +14,20 @@ class Articulo(object):
         self.tema = tema
         self.aceptado = False
         self.calificacion = []
+        self.promedio = 0
 
     # Calcula el promedio de las calificaciones del articulo    
     def promedioEvaluaciones(self):
         if len(self.calificacion) == 0:
-            return 0
+            self.promedio = 0
         else:
-            promedio = 0
+            self.promedio = 0
             for nota in self.calificacion:
-                promedio += nota
+                self.promedio += nota
                 
-            promedio = promedio / float(len(self.calificacion))
-            return promedio
+            self.promedio = self.promedio / float(len(self.calificacion))
+            
+        return self.promedio
 
     # Agrega una nota a la calificacion del articulo
     def calificar(self, nota):

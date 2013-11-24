@@ -14,6 +14,7 @@ from Articulo import *
 from ComitePrograma import *
 from Miembro import *
 from Persona import *
+
 from CLEI import *
 
 # Modulo de prueba de la clase Articulo
@@ -92,6 +93,7 @@ class PruebaArticulo(unittest.TestCase):
             self.Articulo.calificar(i)
 
         assert str(self.Articulo) == self.Articulo.tema+' '+self.Articulo.titulo+': '+str(self.Articulo.calificacion)
+
 
 class PruebaComitePrograma(unittest.TestCase):
 
@@ -173,5 +175,29 @@ class pruebaCLEI(unittest.TestCase):
             "No se estan creando bien los comites"
 
         
+    def testNuevoArticulo(self):
+        self.clei.nuevoArticulo("Titulo", "Tema")
+        assert len(self.clei.articulos) == 1, "Falló creación"
+        assert self.clei.articulos[0].titulo == "Titulo", "El articulo se creó mal"
+        assert self.clei.articulos[0].tema == "Tema", "El articulo se creó mal"
+        self.clei.articulos[:] = []
+
+    def testLlenarListas(self):
+        self.clei.nuevoArticulo("Uno", "Prueba")
+        self.clei.articulos[0].calificar(2)
+        self.clei.articulos[0].calificar(4)
+        self.clei.nuevoArticulo("Dos", "Prueba")
+        self.clei.articulos[1].calificar(5)
+        self.clei.articulos[1].calificar(5)
+        self.clei.nuevoArticulo("Tres", "Prueba")
+        self.clei.articulos[2].calificar(2)
+        self.clei.articulos[2].calificar(5)
+        self.clei.nuevoArticulo("Cuatro", "Prueba")
+        self.clei.articulos[3].calificar(4)
+        self.clei.articulos[3].calificar(3)
+        self.clei.llenarListas(2)
+        assert len(self.clei.articulosAceptados) == 1, "Falló la generación de lista de aceptados"
+        assert len(self.clei.articulosEmpatados) == 2, "Falló la generación de lista de empatados"
+
 if __name__=="__main__":
     unittest.main()
