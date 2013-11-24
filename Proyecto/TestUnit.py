@@ -83,5 +83,31 @@ class PruebaArticulo(unittest.TestCase):
 
         assert str(self.Articulo) == self.Articulo.tema+' '+self.Articulo.titulo+': '+str(self.Articulo.calificacion)
 
+# class PruebaCLEI(unittest.testcase):
+    
+#     def setUp(self):
+#         self.CLEI = CLEI()
+    
+    # def testNuevoArticulo(self):
+    #     self.nuevoArticulo(self, "Titulo", "Tema")
+    #     assert(self.NuevoArticulo() == [0], "Falló creación")
+    #     self.articulos[:] = []
+        
+    # def testGenerarLista(self):
+    #     clei.nuevoArticulo("Uno", "Prueba")
+    #     clei.articulos[0].calificar(2)
+    #     clei.articulos[0].calificar(4)
+    #     clei.nuevoArticulo("Dos", "Prueba")
+    #     clei.articulos[1].calificar(5)
+    #     clei.articulos[1].calificar(5)
+    #     clei.nuevoArticulo("Tres", "Prueba")
+    #     clei.articulos[2].calificar(2)
+    #     clei.articulos[2].calificar(5)
+    #     clei.nuevoArticulo("Cuatro", "Prueba")
+    #     clei.articulo[3].calificar(4)
+    #     clei.articulo[3].calificar(3)
+    #     assert(self.articulosAceptados == [2], "Falló la generación de lista de aceptados")
+    #     assert(self.articulosEmpatados == [], "Falló la generación de lista de empatados")
+
 if __name__=="__main__":
     unittest.main()
