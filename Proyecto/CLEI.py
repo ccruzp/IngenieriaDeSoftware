@@ -24,19 +24,26 @@ class CLEI(object):
     def nuevoArticulo(self, titulo, tema):
         articulo = Articulo(titulo, tema)
         self.articulos.append(articulo)
-        
-    # Genera las listas de artículos aceptados y de artículos empatados.
+    
     def generarListas(self):
-        # Contador
-        i = 0 
-        # Recibe el tamaño máximo que debe tener la lista de aceptados.
-        tam = int(raw_input("Introduzca el tamaño de la lista de aprobados: "))
+        tam = int(raw_input("Introduzca el tamaño máximo que debe tener la lista de aceptados: "))
+        print len(self.articulos)
         if tam > len(self.articulos):
             print "No hay suficientes artículos inscritos"
             return
+        self.llenarListas(tam)
 
+    # Genera las listas de artículos aceptados y de artículos empatados.
+    def llenarListas(self, tam):
+        # Contador
+        i = 0 
         # Ordena la lista de acuerdo al promedio de sus calificaciones
         lista = sorted(self.articulos, reverse = True, key = methodcaller('promedioEvaluaciones'))
+        # Si el tamaño máximo de la lista de aceptados es igual a la cantidad de artículos inscritos se agregan todos a la lista de aceptados
+        if tam == len(lista):
+            for articulo in lista:
+                self.articulosAceptados.append(articulo)
+            return
         # Recorre la lista comparando el promedio de cada elemento con el promedio del primer
         # primer elemento que quedaría fuera
         while i < tam:
