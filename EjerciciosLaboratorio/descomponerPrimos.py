@@ -1,9 +1,15 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-# descomponerPrimos.py
-# Recibe un numero y lo descompone en factores primos
-# Autores: Carlos Cruz 10-10168
-#          Luis Miranda 10-10463
+
+#######################################################
+#                                                     #
+# descomponerPrimos.py                                #
+# Recibe un numero y lo descompone en factores primos #
+# Autores: Carlos Cruz 10-10168                       #
+#          Luis Miranda 10-10463                      #
+#                                                     #
+#######################################################
 
 numero = int(raw_input("Introduzca un numero positivo mayor que 1: "))
 primo = 2

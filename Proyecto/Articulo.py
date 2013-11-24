@@ -33,8 +33,8 @@ class Articulo(object):
     
     # Metodo que verifica si un articulo esta o no aceptado
     def verificarAceptacion(self):
-
-        self.aceptado = self.promedioEvaluaciones() >= 3            
+        if len(self.calificacion) >= 2:
+            self.aceptado = self.promedioEvaluaciones() >= 3            
         return self.aceptado
 
     # Funciona como el toString de Java

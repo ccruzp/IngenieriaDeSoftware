@@ -11,6 +11,10 @@
 
 import unittest
 from Articulo import *
+from ComitePrograma import *
+from Miembro import *
+from Persona import *
+from CLEI import *
 
 # Modulo de prueba de la clase Articulo
 class PruebaArticulo(unittest.TestCase):
@@ -70,6 +74,12 @@ class PruebaArticulo(unittest.TestCase):
         assert self.Articulo.verificarAceptacion(), "Falla con promedio igual a 3"
         self.Articulo.calificacion[:]=[]
 
+        # Numeros cuyo promedio = 3 pero menos de 2 personas lo calificaron
+        self.Articulo.calificar(3)
+
+        assert self.Articulo.verificarAceptacion(), "Falla con menos de 2 personas"
+        self.Articulo.calificacion[:]=[]
+
         # Numeros cuyo promedio < 3
         self.Articulo.calificar(2)
         self.Articulo.calificar(3)
@@ -83,5 +93,85 @@ class PruebaArticulo(unittest.TestCase):
 
         assert str(self.Articulo) == self.Articulo.tema+' '+self.Articulo.titulo+': '+str(self.Articulo.calificacion)
 
+class PruebaComitePrograma(unittest.TestCase):
+
+    def setUp(self):
+        self.comite = ComitePrograma()
+        
+    def testAddMiembro(self):
+        miembro1 = Miembro("Jose", "USB", "jusb@hotmail.com" ,"1342", "1234567")
+        miembro2 = Miembro("Pedro", "BSU", "pusb@hotmail.com" ,"1432", "1243567")
+
+        self.comite.addMiembro(miembro1)
+        assert self.comite.miembros == [miembro1], "No esta agregando a miembro 1"
+
+        self.comite.addMiembro(miembro2)
+        assert self.comite.miembros == [miembro1,miembro2],\
+            "No esta agregando a miembro 2"
+
+    def testSetPresi(self):
+        presi = Miembro("Manic","BUS","mic@mand.te","8888","88888")
+        miembro1 = Miembro("Jose", "USB", "jusb@hotmail.com" ,"1342", "1234567")
+        miembro2 = Miembro("Pedro", "BSU", "pusb@hotmail.com" ,"1432", "1243567")
+
+        self.comite.addMiembro(miembro1)
+        self.comite.addMiembro(miembro2)
+
+        assert not self.comite.setPresi(presi), "Coloco como presi un no miembro"
+
+        self.comite.addMiembro(presi)
+        assert self.comite.setPresi(presi) and self.comite.presi == presi,\
+            "Fallo colocando como presi a alguien que acabo de agregar"
+
+        for x in self.comite.miembros:
+            assert self.comite.setPresi(x) and self.comite.presi == x,\
+                "Falla colocando como presi a un miembro cualquiera"
+
+class pruebaCLEI(unittest.TestCase):
+
+    def setUp(self):
+        self.clei = CLEI()
+
+    def testAddComites(self):
+        
+        for i in range(0,100):
+            self.clei.addComites("topico"+str(i))
+            
+            assert len(self.clei.comites) == self.clei.numComi,\
+                "No se estan agregando comite "+str(i)
+
+    def testSetPresidente(self):
+
+        self.clei.addComites("topico")
+        self.clei.addMiembro('1',"Jose", "USB", "jusb@hotmail.com","1342"\
+                                 , "1234567")
+
+        assert self.clei.setPresidente('1',self.clei.comites['1'].miembros[0]),\
+            "No esta agregando presidente"
+
+        
+    def testAddMiembro(self):
+
+        self.clei.addComites("topico")
+        comitePrueba = ComitePrograma()
+        comitePrueba.topicos.append("topico")
+
+        for i in range(0,3):
+            miembro = Miembro("Jose"+str(i), "USB", "jusb"+str(i)+\
+                                  "@hotmail.com",str(i)+"-1342", str(i)+\
+                                  "1234567")
+            comitePrueba.miembros.append(miembro)
+            self.clei.addMiembro('1',"Jose"+str(i), "USB", "jusb"+str(i)+\
+                                     "@hotmail.com",str(i)+"-1342", str(i)+\
+                                     "1234567")
+
+        presi = self.clei.comites['1'].miembros[1]
+        comitePrueba.presi = presi
+        self.clei.comites['1'].setPresi(presi)
+
+        assert str(comitePrueba) == str(self.clei.comites['1']),\
+            "No se estan creando bien los comites"
+
+        
 if __name__=="__main__":
     unittest.main()
