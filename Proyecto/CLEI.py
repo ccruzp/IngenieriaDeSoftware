@@ -47,7 +47,11 @@ class CLEI(object):
     def addMiembro(self,numComite,nombre, inst, correo, dirpost,
                    numero, url=None):
         miembro = Miembro(nombre, inst, correo, dirpost, numero, url)
-        self.comites[numComite].addMiembro(miembro)
+        try:
+            self.comites[numComite].addMiembro(miembro)
+            return True 
+        except KeyError, e:
+            return False
 
     def setPresidente(self,numComite, miembro):
         return self.comites[numComite].setPresi(miembro)
@@ -97,6 +101,25 @@ class CLEI(object):
                 self.articulosAceptados.append(lista[i])
             i += 1
 
+    def __str__(self):
+        articulos = ''
+        for c in self.articulos:
+            articulos += str(c)
+        comites = ''
+        for c in self.comites.values():
+            comites += '\n'+str(c)
+        articulosAceptados = ''
+        for c in self.articulosAceptados:
+            articulosAceptados += str(c)
+        articulosEmpatados = ''
+        for c in self.articulosEmpatados:
+            articulosEmpatados += str(c)
+
+            
+        return 'Comites:\n'+comites+'\n'\
+            '\nArticulos:\n'+articulos+'\n'\
+            '\nArticulos Aceptados:\n'+articulosAceptados+'\n'\
+            '\nArticulos Empatados:\n'+articulosEmpatados
 
 if __name__ == "__main__":
     clei = CLEI()
