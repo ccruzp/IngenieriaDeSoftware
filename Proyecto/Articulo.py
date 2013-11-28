@@ -35,15 +35,15 @@ class Articulo(object):
     
     # Metodo que verifica si un articulo esta o no aceptado
     def verificarAceptacion(self):
-
-        self.aceptado = self.promedioEvaluaciones() >= 3            
+        if len(self.calificacion) >= 2:
+            self.aceptado = self.promedioEvaluaciones() >= 3            
         return self.aceptado
 
     # Funciona como el toString de Java
     def __str__(self):
         return self.tema+' '+self.titulo+': '+str(self.calificacion)
 
-# En la internet en todos lados sale esto xD
+# Código principal
 if __name__=="__main__":
     print "Hola"
     articulo = Articulo("Articulo de prueba", "Pruebas")

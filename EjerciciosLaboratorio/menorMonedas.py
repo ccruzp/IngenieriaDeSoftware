@@ -4,7 +4,7 @@
 ##############################################################
 #                                                            #
 # menorMonedas.py                                            #
-#                                                            #
+# Calcula el menor numero monedas a repartir                 #
 # Carlos Cruz 10-10168                                       #
 # Luis Miranda 10-10463                                      #
 #                                                            #

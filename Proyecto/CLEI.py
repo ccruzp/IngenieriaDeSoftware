@@ -7,27 +7,63 @@
 # Clase que implementa la Conferencia Latinoamericana de Informática CLEI
 
 from Articulo import *
+from ComitePrograma import *
+from Persona import *
+from Miembro import *
 from operator import methodcaller
 
 class CLEI(object):
+    
+    numComi = 0
 
     # Constructor
     def __init__(self):
         self.fechaInicio = None
         self.fechaFin = None
         self.topicos = []
+
+        self.comites = {}
+        self.personas = []
         self.articulos = []
         self.articulosAceptados = []
         self.articulosEmpatados = []
+
+    def agregarTopico(self, tema):
+        self.topicos.append(tema)
+
 
     # Crea un nuevo artículo y lo agrega a la lista de artículos del CLEI
     def nuevoArticulo(self, titulo, tema):
         articulo = Articulo(titulo, tema)
         self.articulos.append(articulo)
+        
+
+    def listarArticulosAceptados(self):
+         for articulo in sorted(self.articulos, reverse = True):
+             print articulo.promedioEvaluaciones()
+             if articulo.aceptado:
+                 print articulo
+
+    def addMiembro(self,numComite,nombre, inst, correo, dirpost,
+                   numero, url=None):
+        miembro = Miembro(nombre, inst, correo, dirpost, numero, url)
+        try:
+            self.comites[numComite].addMiembro(miembro)
+            return True 
+        except KeyError, e:
+            return False
+
+    def setPresidente(self,numComite, miembro):
+        return self.comites[numComite].setPresi(miembro)
+
+    def addComites(self, topico):
+        comite = ComitePrograma()
+        comite.topicos.append(topico)
+        self.numComi+=1
+        self.comites[str(self.numComi)]=comite
     
     def generarListas(self):
         tam = int(raw_input("Introduzca el tamaño máximo que debe tener la lista de aceptados: "))
-        print len(self.articulos)
         if tam > len(self.articulos):
             print "No hay suficientes artículos inscritos"
             return
@@ -64,6 +100,25 @@ class CLEI(object):
                 self.articulosAceptados.append(lista[i])
             i += 1
 
+    def __str__(self):
+        articulos = ''
+        for c in self.articulos:
+            articulos += str(c)
+        comites = ''
+        for c in self.comites.values():
+            comites += '\n'+str(c)
+        articulosAceptados = ''
+        for c in self.articulosAceptados:
+            articulosAceptados += str(c)
+        articulosEmpatados = ''
+        for c in self.articulosEmpatados:
+            articulosEmpatados += str(c)
+
+            
+        return 'Comites:\n'+comites+'\n'\
+            '\nArticulos:\n'+articulos+'\n'\
+            '\nArticulos Aceptados:\n'+articulosAceptados+'\n'\
+            '\nArticulos Empatados:\n'+articulosEmpatados
 
 if __name__ == "__main__":
     clei = CLEI()
@@ -81,9 +136,11 @@ if __name__ == "__main__":
     clei.articulos[3].calificar(3)
     clei.generarListas()
     print "A"
+    print len(clei.articulosAceptados)
     for a in clei.articulosAceptados:
         print a
 
     print "B"
     for b in clei.articulosEmpatados:
         print b
+
